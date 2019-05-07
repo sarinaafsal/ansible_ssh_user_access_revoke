@@ -1,25 +1,24 @@
 ---
 - name: Grant/revoke access to the group of servers to the new developer
-  hosts: all
+  hosts: servers
   become: true
   vars:
     developers_group: 'dev_group'
-	developers_list:
-	# Add users to the servers group
-  - name: "new developer"
-    username: "newdev"
-    keys:
-      active:
-        - "ssh-rsa newdev@abc.io
-    shell: "/bin/bash"
-    state: present
-    # Revoke ssh access from the server group
-  - name: "Revoke user from the group"
-    username: "olddev
-    state: absent
+    developers_list:
+      # Add users to the servers group
+      - name: "new developer"
+        username: "newdev"
+        keys:
+          active:
+             - "ssh-rsa newdev@abc.io"
+        shell: "/bin/bash"
+        state: present
+      # Revoke ssh access from the server group
+      - name: "Revoke user from the group"
+        username: "olddev
+        state: absent
 	
   tasks:
-
   - name: Setup the new user
     user:
       name: "{{ item.username }}"
